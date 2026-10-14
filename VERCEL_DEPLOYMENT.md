@@ -6,12 +6,20 @@ VoxCortex AI is engineered to deploy seamlessly to [Vercel](https://vercel.com) 
 
 ---
 
-## 1. Zero-Config One-Click Vercel Deployment
+## 1. Unified Multi-Service Monorepo Deployment
 
-1. Push your repository to GitHub.
-2. In the [Vercel Dashboard](https://vercel.com/new), click **Import** on your repo.
-3. Keep the **Root Directory** as `./` (default).
-4. Vercel automatically detects the build command from root `package.json` (`cd frontend && npm install && npm run build`) and uses `frontend/dist` as the output directory.
+VoxCortex AI is configured with Vercel's official **Services** monorepo architecture:
+
+1. In the [Vercel Import Screen](https://vercel.com/new), select `Jayasri0307/VOXCORTEX`.
+2. Notice **Application Preset**: `Services` (auto-detected).
+3. The root [`vercel.json`](vercel.json) configures both `backend` (FastAPI) and `frontend` (Vite) as coordinated services under a single domain.
+4. Add your Environment Variables (see Section 2).
+5. Click **Deploy**. Vercel will build both services and link them with shared routing!
+
+### Alternative: Standalone Single Project Deployment
+If your Vercel plan does not have Vercel Services enabled:
+- In the Vercel Import screen, click **"Import single project ->"** next to **`frontend`** (Root Directory: `frontend`).
+- Click **"Import single project ->"** next to **`backend`** (Root Directory: `backend`).
 
 ---
 
