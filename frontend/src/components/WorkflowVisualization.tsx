@@ -31,12 +31,12 @@ interface StepNodeDef {
 }
 
 const PIPELINE_NODES: StepNodeDef[] = [
-  { key: 'voice_input', name: '1. Voice Input', subtitle: 'Omi phone app or manual speech transcript', icon: Mic, color: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
+  { key: 'voice_input', name: '1. Voice Capture', subtitle: 'Mobile microphone or audio stream', icon: Mic, color: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
   { key: 'transcript_processing', name: '2. Transcript Processing', subtitle: 'Sanitization & structure validation', icon: FileText, color: 'text-slate-700 bg-slate-50 border-slate-200' },
   { key: 'manager', name: '3. Manager Agent', subtitle: 'Lyzr intent routing & agent coordination', icon: Cpu, color: 'text-violet-600 bg-violet-50 border-violet-200' },
   { key: 'summarizer', name: '4. Summarizer Agent', subtitle: 'Executive synthesis & key takeaways', icon: Sparkles, color: 'text-cyan-600 bg-cyan-50 border-cyan-200' },
   { key: 'task_extractor', name: '5. Task Extractor', subtitle: 'Action items, deadlines & assignees', icon: CheckSquare, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
-  { key: 'qdrant_memory', name: '6. Qdrant Memory', subtitle: '384-dim dense vectors & tenant index', icon: Database, color: 'text-blue-600 bg-blue-50 border-blue-200' },
+  { key: 'qdrant_memory', name: '6. Memory Vault', subtitle: 'Encrypted vector store & tenant index', icon: Database, color: 'text-blue-600 bg-blue-50 border-blue-200' },
   { key: 'qdrant_retrieval', name: '7. Memory Retrieval', subtitle: 'Semantic vector similarity match', icon: Search, color: 'text-amber-600 bg-amber-50 border-amber-200' },
   { key: 'memory_assistant', name: '8. Memory Assistant', subtitle: 'Contextual RAG synthesis with citations', icon: Bot, color: 'text-purple-600 bg-purple-50 border-purple-200' },
   { key: 'final_response', name: '9. Final Response', subtitle: 'Grounded output, evidence & telemetry', icon: CheckCircle2, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' }
@@ -84,7 +84,7 @@ export const WorkflowVisualization: React.FC<WorkflowVisualizationProps> = ({ cu
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Real multi-agent processing pipeline connecting Omi speech, Lyzr orchestration, and Qdrant Cloud memory.
+            Real multi-agent processing pipeline connecting mobile voice, Lyzr agent orchestration, and your AI Memory Vault.
           </p>
         </div>
 
@@ -185,8 +185,8 @@ export const WorkflowVisualization: React.FC<WorkflowVisualizationProps> = ({ cu
 
       {/* Caption note */}
       <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-        <span>Nodes light up in real-time as tasks execute across Lyzr and Qdrant.</span>
-        <span className="text-indigo-600 font-medium">Lyzr v3 Orchestration • Qdrant Cloud Cosine</span>
+        <span>Nodes activate in real-time as autonomous agents execute tasks.</span>
+        <span className="text-indigo-600 font-medium">Multi-Agent Orchestration • AI Memory Vault</span>
       </div>
     </div>
   );

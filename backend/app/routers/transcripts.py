@@ -18,3 +18,11 @@ async def ingest_transcript(req: TranscriptIngestRequest):
         err_msg = execution.error.message if execution.error else "Processing failed"
         raise HTTPException(status_code=500, detail=err_msg)
     return execution
+
+
+ingest_alias_router = APIRouter(prefix="/api/ingest", tags=["Transcripts"])
+
+@ingest_alias_router.post("", response_model=WorkflowExecution)
+async def ingest_alias(req: TranscriptIngestRequest):
+    return await ingest_transcript(req)
+

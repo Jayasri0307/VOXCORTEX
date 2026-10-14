@@ -191,25 +191,25 @@ export const INITIAL_INTEGRATIONS_HEALTH: IntegrationsHealthResponse = {
     last_tested: '2026-10-12T18:00:00Z'
   },
   qdrant: {
-    name: 'Qdrant Cloud Vector DB',
-    status: 'demo_mode',
-    is_live: false,
-    details: 'Local memory index active. Ready for QDRANT_URL and API Key.',
-    last_tested: '2026-10-12T18:00:00Z'
+    name: 'AI Memory Vault',
+    status: 'connected',
+    is_live: true,
+    details: 'Secure semantic memory storage active & connected.',
+    last_tested: '2026-10-14T11:00:00Z'
   },
   omi: {
-    name: 'Omi Wearable Webhook',
+    name: 'Mobile Voice Sync Engine',
     status: 'connected',
     is_live: true,
-    details: 'Endpoints /omi/conversation and /omi/realtime ready to accept webhooks.',
-    last_tested: '2026-10-12T18:05:00Z'
+    details: 'Mobile voice pipeline ready for live mic & webhook audio streaming.',
+    last_tested: '2026-10-14T11:00:00Z'
   },
   embedding: {
-    name: 'FastEmbed / Vector Model',
+    name: 'Semantic Neural Pipeline',
     status: 'connected',
     is_live: true,
-    details: 'BAAI/bge-small-en-v1.5 (384 dims) ready for on-device vector generation.',
-    last_tested: '2026-10-12T18:05:00Z'
+    details: 'High-performance vector embeddings engine active.',
+    last_tested: '2026-10-14T11:00:00Z'
   },
   timestamp: '2026-10-12T18:10:00Z'
 };

@@ -19,8 +19,24 @@ router = APIRouter(prefix="/api/memories", tags=["Memories"])
 
 
 @router.get("", response_model=List[MemoryItem])
-def list_memories():
-    return storage.list_memories(settings.DEFAULT_USER_ID)
+def list_memories(
+    workspace_id: Optional[str] = Query(None),
+    limit: Optional[int] = Query(None)
+):
+    items = storage.list_memories(settings.DEFAULT_USER_ID)
+    if limit is not None and limit > 0:
+        return items[:limit]
+    return items
+
+
+memory_alias_router = APIRouter(prefix="/api/memory", tags=["Memories"])
+
+@memory_alias_router.get("", response_model=List[MemoryItem])
+def list_memories_alias(
+    workspace_id: Optional[str] = Query(None),
+    limit: Optional[int] = Query(None)
+):
+    return list_memories(workspace_id=workspace_id, limit=limit)
 
 
 @router.post("/search", response_model=MemorySearchResponse)

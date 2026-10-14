@@ -34,7 +34,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({ initialQuery, onCl
     {
       id: 'welcome-msg',
       role: 'assistant',
-      content: "Hello! I am your **MindFlow Memory Assistant**.\n\nI answer your questions using semantic vector search in Qdrant Cloud and reasoning from your Lyzr Memory Assistant Agent. Ask me anything about previous voice conversations, decisions, or commitments.",
+      content: "Hello! I am your **VoxCortex Cognitive Memory Assistant**.\n\nI answer your questions using semantic vector search in your AI Memory Vault and autonomous reasoning from your Lyzr Memory Assistant Agent. Ask me anything about previous voice conversations, decisions, or commitments.",
       timestamp: new Date().toISOString()
     }
   ]);
@@ -286,7 +286,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({ initialQuery, onCl
             </div>
             <div className="p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-slate-600 rounded-bl-none flex items-center gap-3 shadow-2xs">
               <Loader2 className="w-4 h-4 text-indigo-600 animate-spin" />
-              <span>Querying Qdrant Cloud vectors and reasoning via Memory Assistant Agent...</span>
+              <span>Querying AI Memory Vault and reasoning via Memory Assistant Agent...</span>
             </div>
           </div>
         )}
@@ -320,7 +320,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({ initialQuery, onCl
           </button>
         </div>
         <div className="flex justify-between items-center mt-2 px-1 text-[11px] text-slate-400">
-          <span>Qdrant Cloud RAG with Lyzr Reasoning</span>
+          <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> AI Memory Vault • Autonomous Reasoning</span>
           <span>Press Enter to send</span>
         </div>
       </form>

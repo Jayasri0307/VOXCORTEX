@@ -159,6 +159,36 @@ class ApiService {
     }
     return await res.json();
   }
+
+  async getIntegrationsStatus(): Promise<any> {
+    const res = await fetch(`${API_BASE_URL}/api/integrations/status`, {
+      signal: AbortSignal.timeout(4000)
+    });
+    if (!res.ok) throw new Error(`Failed to load integrations status: ${res.statusText}`);
+    return await res.json();
+  }
+
+  async sendOmiWebhook(payload: { session_id?: string; transcript?: string; structured?: any; transcript_segments?: any[] }, secretToken?: string): Promise<any> {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (secretToken) {
+      headers['x-omi-secret'] = secretToken;
+    }
+    const res = await fetch(`${API_BASE_URL}/omi/conversation`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(15000)
+    });
+    if (!res.ok) {
+      let errDetail = 'Omi webhook delivery failed';
+      try {
+        const errJson = await res.json();
+        errDetail = errJson.detail || errDetail;
+      } catch {}
+      throw new Error(errDetail);
+    }
+    return await res.json();
+  }
 }
 
 export const api = new ApiService();

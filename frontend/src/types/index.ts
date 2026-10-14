@@ -4,6 +4,7 @@ export type NavigationTab =
   | 'memories' 
   | 'tasks' 
   | 'agents' 
+  | 'omi'
   | 'settings';
 
 export type StepStatus = 'waiting' | 'running' | 'completed' | 'failed' | 'skipped';
@@ -66,11 +67,9 @@ export interface MemoryItem {
   key_facts?: string[];
   facts?: string[];
   topics?: string[];
-  participants?: string[];
   duration_seconds?: number;
-  source: 'manual' | 'omi' | 'voice';
+  source: 'manual' | 'omi' | 'voice' | 'mobile' | string;
   status?: 'indexed' | 'pending' | 'failed';
-  vector_id?: string;
   embedding_model?: string;
   correlation_id?: string;
   created_at: string;

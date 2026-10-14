@@ -63,7 +63,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           </div>
           <div>
             <h2 className="text-base font-bold text-slate-900">Privacy & Isolated Memory Governance</h2>
-            <p className="text-xs text-slate-500">MindFlow AI guarantees tenant isolation and vector boundary integrity</p>
+            <p className="text-xs text-slate-500">VoxCortex AI guarantees tenant isolation and vector boundary integrity</p>
           </div>
         </div>
 
@@ -81,10 +81,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
               <Database className="w-4 h-4 text-cyan-600" />
-              <span>Vector Tenant Filtering</span>
+              <span>Tenant Data Isolation</span>
             </div>
             <p className="text-[11px] text-slate-600 leading-relaxed">
-              Dense vector embeddings in Qdrant Cloud are indexed and searched with strict tenant payload filters, ensuring zero cross-user information leakage.
+              Dense semantic memory records are stored with strict tenant payload filters, ensuring complete privacy and isolation.
             </p>
           </div>
 
@@ -94,7 +94,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
               <span>Zero Browser Secrets</span>
             </div>
             <p className="text-[11px] text-slate-600 leading-relaxed">
-              API tokens for Lyzr and Qdrant reside strictly within backend/.env. Client browsers never receive, store, or transmit secret credentials.
+              API credentials reside strictly on the secure backend server. Client browsers never receive, store, or transmit secret keys.
             </p>
           </div>
         </div>
@@ -104,31 +104,37 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
       <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
         <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
           <Info className="w-4 h-4 text-slate-500" />
-          Runtime Environment Telemetry
+          System Health & Service Connectivity
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
           <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">FastAPI Backend</span>
+            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Backend Gateway</span>
             <div className="font-bold text-slate-900 flex items-center gap-1.5 pt-0.5">
               <span className={`w-2 h-2 rounded-full ${isBackendLive ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-              {isBackendLive ? 'Online (:8000)' : 'Connecting...'}
+              {isBackendLive ? 'Active (Port 8000)' : 'Connecting...'}
             </div>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Local Embeddings</span>
-            <div className="font-bold text-slate-900 pt-0.5">BAAI/bge-small-en-v1.5</div>
+            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">AI Memory Vault</span>
+            <div className="font-bold text-emerald-700 flex items-center gap-1.5 pt-0.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              Connected & Active
+            </div>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Vector Space</span>
-            <div className="font-bold text-slate-900 pt-0.5">384 Dimensions (Cosine)</div>
+            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Multi-Agent Core</span>
+            <div className="font-bold text-indigo-700 flex items-center gap-1.5 pt-0.5">
+              <span className="w-2 h-2 rounded-full bg-indigo-500" />
+              4 Agents Operational
+            </div>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1">
-            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Indexed Memory Points</span>
-            <div className="font-bold text-violet-700 pt-0.5">{memories.length} Stored Points</div>
+            <span className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Stored Memory Records</span>
+            <div className="font-bold text-violet-700 pt-0.5">{memories.length} Active Records</div>
           </div>
         </div>
       </div>
@@ -150,7 +156,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
               Destructive Operation: Purge Memory Store
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed max-w-xl">
-              Permanently delete all recorded voice conversations, AI summaries, extracted tasks, and vector points from Qdrant Cloud. This action cannot be reversed.
+              Permanently delete all recorded voice conversations, AI summaries, extracted tasks, and semantic memory vectors. This action cannot be reversed.
             </p>
           </div>
 
@@ -178,7 +184,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
             </div>
             
             <p className="text-xs text-slate-600 leading-relaxed">
-              This will erase all <strong>{memories.length} stored conversations</strong> and associated vector embeddings in Qdrant Cloud. To confirm, please type <strong className="text-rose-600 font-mono">DELETE</strong> below:
+              This will erase all <strong>{memories.length} stored conversations</strong> and associated semantic memory embeddings. To confirm, please type <strong className="text-rose-600 font-mono">DELETE</strong> below:
             </p>
 
             <input

@@ -22,7 +22,7 @@ class MemoryItem(BaseModel):
     user_id: str = settings.DEFAULT_USER_ID
     conversation_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
-    source: Literal["manual", "omi", "voice"] = "manual"
+    source: str = "manual"
     timestamp: str = Field(default_factory=utcnow)
     transcript: str
     summary: str = ""
@@ -155,7 +155,7 @@ class ChatRequest(BaseModel):
 class TranscriptIngestRequest(BaseModel):
     transcript: str = Field(min_length=1, max_length=settings.MAX_TRANSCRIPT_CHARS)
     title: Optional[str] = Field(default=None, max_length=200)
-    source: Literal["manual", "omi", "voice"] = "manual"
+    source: str = "manual"
 
     @field_validator("transcript")
     @classmethod

@@ -1,39 +1,79 @@
-# Deploying MindFlow AI to Vercel (Services)
+# Deploying VoxCortex AI to Vercel (Universal Monorepo)
 
-This repo deploys as **one Vercel project with two services**, configured in the root [`vercel.json`](vercel.json).
+VoxCortex AI is engineered to deploy seamlessly to [Vercel](https://vercel.com) as a unified full-stack monorepo combining:
+1. **Frontend**: React + Vite + TypeScript Single Page Application (built into `frontend/dist`)
+2. **Backend**: Python FastAPI ASGI Serverless Function (served via `api/index.py`)
 
-| Service    | Root        | Framework | Public paths                                                                 |
-|------------|-------------|-----------|------------------------------------------------------------------------------|
-| `backend`  | `backend/`  | FastAPI (`main:app`) | `/api/*`, `/health`, `/omi`, `/omi/*`, `/webhook/*`, `/docs`, `/openapi.json` |
-| `frontend` | `frontend/` | Vite (React SPA)     | everything else (`/*`), with SPA fallback to `index.html`                    |
+---
 
-The backend service receives the **original request path** (e.g. `/api/stats`), which matches the FastAPI router prefixes as-is — no path rewriting is needed.
+## 1. Zero-Config One-Click Vercel Deployment
 
-## Service-to-service calls (bindings)
+1. Push your repository to GitHub.
+2. In the [Vercel Dashboard](https://vercel.com/new), click **Import** on your repo.
+3. Keep the **Root Directory** as `./` (default).
+4. Vercel automatically detects the build command from root `package.json` (`cd frontend && npm install && npm run build`) and uses `frontend/dist` as the output directory.
 
-There are **no bindings**. The frontend is a static SPA: all API calls are made by the browser to same-origin relative URLs (`/api/...`, `/health`), and the top-level rewrites route them to `backend`. The backend only calls external services (Lyzr, Qdrant, OpenAI embeddings), never the frontend.
+---
 
-## Deploy
+## 2. Environment Variables Configuration
 
-1. Import `Boini-shiva/mindflow-ai` in the [Vercel Dashboard](https://vercel.com/new). Keep Root Directory as `./`.
-2. Add environment variables (shared by all services):
+In **Project Settings** → **Environment Variables**, configure the following keys:
 
-   | Variable | Notes |
-   |---|---|
-   | `LYZR_API_KEY`, `LYZR_MANAGER_AGENT_ID`, `LYZR_SUMMARIZER_AGENT_ID`, `LYZR_TASK_AGENT_ID`, `LYZR_MEMORY_AGENT_ID` | Lyzr Studio |
-   | `QDRANT_URL`, `QDRANT_API_KEY`, `QDRANT_COLLECTION` | Qdrant Cloud |
-   | `EMBEDDING_PROVIDER` (`fastembed` or `openai`), `EMBEDDING_API_KEY` | Embeddings |
-   | `OMI_WEBHOOK_SECRET` | Optional |
+| Environment Variable | Description | Source |
+|---|---|---|
+| `LYZR_API_KEY` | Lyzr Studio API Key | [Lyzr Studio](https://studio.lyzr.ai) |
+| `LYZR_MANAGER_AGENT_ID` | Lyzr Manager Agent UUID | Lyzr Agents |
+| `LYZR_SUMMARIZER_AGENT_ID` | Lyzr Summarizer Agent UUID | Lyzr Agents |
+| `LYZR_TASK_AGENT_ID` | Lyzr Task Extractor Agent UUID | Lyzr Agents |
+| `LYZR_MEMORY_AGENT_ID` | Lyzr Memory Assistant Agent UUID | Lyzr Agents |
+| `QDRANT_URL` | Qdrant Cloud Cluster Endpoint | [Qdrant Cloud](https://cloud.qdrant.io) |
+| `QDRANT_API_KEY` | Qdrant Cloud API Key | Qdrant Cloud |
+| `QDRANT_COLLECTION` | Collection name (e.g., `mindflow_memories`) | Default: `mindflow_memories` |
+| `EMBEDDING_PROVIDER` | `fastembed` (default, no key needed) or `openai` | Default: `fastembed` |
+| `EMBEDDING_API_KEY` | OpenAI API key (only if using `EMBEDDING_PROVIDER=openai`) | Optional |
+| `OMI_WEBHOOK_SECRET` | Custom shared webhook authentication token | Optional |
 
-   Do **not** set `VITE_API_BASE_URL` — leave it empty so the frontend stays same-origin.
-3. Deploy.
+> [!NOTE]
+> Leave `VITE_API_BASE_URL` empty. In production, frontend API calls use same-origin relative URLs (`/api/...`, `/health`, `/omi`), which Vercel rewrites to `api/index.py`.
 
-## Local development
+---
 
-- **All services together (recommended):** `vercel dev` (or `vercel dev -L` without logging in).
-- **Separately:** run `uvicorn app.main:app --port 8000` in `backend/` and `npm run dev` in `frontend/`; the Vite proxy forwards `/api`, `/health`, `/omi` to port 8000.
+## 3. Architecture & Routing Matrix
 
-## Notes / limitations
+The root [`vercel.json`](vercel.json) routes incoming requests seamlessly:
 
-- Local JSON storage lives in `/tmp` on Vercel and is **not persistent** across function instances. Qdrant is the durable store for memories.
-- FastEmbed downloads its model into `/tmp` on cold start; if that fails, a deterministic fallback vector is used. For production-quality retrieval, consider `EMBEDDING_PROVIDER=openai`.
+```
+User Request
+    │
+    ├── /api/* ──────────────► api/index.py (FastAPI ASGI Serverless Function)
+    ├── /health ─────────────► api/index.py
+    ├── /omi & /omi/* ───────► api/index.py (Omi Hardware Webhook Ingestion)
+    ├── /docs ───────────────► api/index.py (Interactive Swagger API Explorer)
+    └── /* (all other) ──────► frontend/dist/index.html (React Vite SPA)
+```
+
+---
+
+## 4. Local Development
+
+You can run both services together or separately:
+
+### Run Separately (Standard Local Dev)
+- **FastAPI Backend**:
+  ```powershell
+  cd backend
+  .\.venv\Scripts\Activate.ps1
+  python -m uvicorn app.main:app --port 8001
+  ```
+- **React Vite Frontend**:
+  ```powershell
+  cd frontend
+  npm run dev
+  ```
+  Vite's dev proxy forwards `/api`, `/health`, and `/omi` to `http://127.0.0.1:8001`.
+
+### Run Unified with Vercel CLI
+```bash
+npm install -g vercel
+vercel dev
+```

@@ -34,3 +34,7 @@ Thumbs.db
 # Local storage databases
 backend/mindflow_data.json
 backend/mindflow_local.db
+backend/data/
+backend/scratch_*.py
+scratch/
+*.log

@@ -25,7 +25,7 @@ logger = logging.getLogger("mindflow")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting MindFlow AI backend v%s", settings.VERSION)
+    logger.info("Starting VoxCortex AI backend v%s", settings.VERSION)
     # Warm up embedding model & ensure Qdrant collection in background
     try:
         await embedding_service.warm_up()
@@ -37,13 +37,13 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning("Startup service verification note: %s", e)
     yield
-    logger.info("MindFlow AI backend shutdown completed.")
+    logger.info("VoxCortex AI backend shutdown completed.")
 
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="MindFlow AI Multi-Agent Voice Memory Assistant API",
+    description="VoxCortex AI — Autonomous Voice Memory & Cognitive Multi-Agent Intelligence API",
     lifespan=lifespan
 )
 
@@ -59,7 +59,9 @@ app.add_middleware(
 # Mount all active routers
 app.include_router(health.router)
 app.include_router(memories.router)
+app.include_router(memories.memory_alias_router)
 app.include_router(transcripts.router)
+app.include_router(transcripts.ingest_alias_router)
 app.include_router(tasks.router)
 app.include_router(chat.router)
 app.include_router(agents.router)

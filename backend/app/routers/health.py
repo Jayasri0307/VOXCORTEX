@@ -9,6 +9,8 @@ router = APIRouter(tags=["Health & Stats"])
 
 
 @router.get("/health")
+@router.get("/api/health")
+@router.get("/api/memory/health")
 def get_health():
     return {
         "status": "healthy",
@@ -17,6 +19,40 @@ def get_health():
         "environment": settings.ENVIRONMENT,
         "lyzr_configured": not bool(settings.missing_lyzr_vars()),
         "qdrant_configured": qdrant_service.is_configured(),
+        "timestamp": utcnow()
+    }
+
+
+@router.get("/api/integrations/status")
+def get_integrations_status():
+    lyzr_missing = settings.missing_lyzr_vars()
+    qdrant_missing = settings.missing_qdrant_vars()
+    has_omi_secret = bool(settings.omi_secret_effective)
+    
+    return {
+        "lyzr": {
+            "configured": len(lyzr_missing) == 0,
+            "status": "connected" if len(lyzr_missing) == 0 else "unconfigured",
+            "missing_vars": lyzr_missing,
+            "agents": {
+                "manager": bool(settings.LYZR_MANAGER_AGENT_ID),
+                "summarizer": bool(settings.LYZR_SUMMARIZER_AGENT_ID),
+                "task_extractor": bool(settings.LYZR_TASK_AGENT_ID),
+                "memory_assistant": bool(settings.LYZR_MEMORY_AGENT_ID)
+            }
+        },
+        "qdrant": {
+            "configured": qdrant_service.is_configured(),
+            "status": "connected" if qdrant_service.is_configured() else "unconfigured",
+            "collection": settings.QDRANT_COLLECTION,
+            "vector_dimension": settings.EMBEDDING_DIMENSION
+        },
+        "omi": {
+            "configured": True,
+            "webhook_path": "/omi/conversation",
+            "auth_enforced": has_omi_secret,
+            "status": "ready"
+        },
         "timestamp": utcnow()
     }
 

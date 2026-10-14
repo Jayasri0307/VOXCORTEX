@@ -54,7 +54,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     {
       label: 'Indexed Memories',
       value: stats ? stats.memories : (isBackendLive ? '0' : '—'),
-      change: 'Persistent in Qdrant Cloud',
+      change: 'Active in Neural Vault',
       icon: Database,
       color: 'text-indigo-600 bg-indigo-50 border-indigo-100',
     },
@@ -86,48 +86,55 @@ export const Dashboard: React.FC<DashboardProps> = ({
       {/* Welcome Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-            Welcome to MindFlow AI
+          <h2 className="text-xl font-black text-slate-900 tracking-tight">
+            Welcome to VOX<span className="text-violet-600">CORTEX</span> AI
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Your voice memory assistant powered by Lyzr multi-agents and Qdrant Cloud vectors.
+            Autonomous Voice Memory & Cognitive Intelligence Platform with Real-Time Multi-Agent Reasoning.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           <button
-            onClick={onOpenNewMemoryModal}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors"
+            onClick={() => onNavigate('omi')}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 text-xs font-semibold shadow-xs transition-colors"
           >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Ingest Transcript</span>
+            <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+            <span>Mobile Voice Sync</span>
+          </button>
+          <button
+            onClick={onOpenNewMemoryModal}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold shadow-xs transition-colors"
+          >
+            <Mic className="w-3.5 h-3.5" />
+            <span>Ingest Voice Memory</span>
           </button>
         </div>
       </div>
 
-      {/* Prominent "Ask MindFlow" Search Input */}
-      <div className="saas-card rounded-2xl p-4 bg-gradient-to-r from-indigo-50/50 via-white to-cyan-50/30 border-indigo-100 shadow-sm">
+      {/* Prominent "Ask VoxCortex" Search Input */}
+      <div className="rounded-2xl p-4 bg-gradient-to-r from-violet-50/70 via-white to-cyan-50/40 border border-violet-100 shadow-sm">
         <form onSubmit={handleAskSubmit} className="relative flex items-center">
-          <Search className="w-4 h-4 text-indigo-500 absolute left-3.5" />
+          <Search className="w-4 h-4 text-violet-500 absolute left-3.5" />
           <input
             type="text"
-            placeholder="Ask MindFlow anything about past conversations, decisions, or action items..."
+            placeholder="Ask VoxCortex anything about past conversations, decisions, or extracted action items..."
             value={askInput}
             onChange={(e) => setAskInput(e.target.value)}
-            className="w-full pl-10 pr-24 py-3 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 shadow-2xs"
+            className="w-full pl-10 pr-24 py-3 rounded-xl bg-white border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 shadow-2xs"
           />
           <button
             type="submit"
             disabled={!askInput.trim()}
-            className="absolute right-2 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold flex items-center gap-1.5 shadow-2xs transition-colors"
+            className="absolute right-2 px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white text-xs font-semibold flex items-center gap-1.5 shadow-2xs transition-colors"
           >
-            <span>Ask</span>
+            <span>Query Cortex</span>
             <Send className="w-3 h-3" />
           </button>
         </form>
         <div className="flex items-center justify-between mt-2.5 px-1 text-[11px] text-slate-400">
-          <span>Retrieves top chunks from Qdrant Cloud and synthesizes answers via Lyzr Memory Assistant.</span>
-          <span className="text-indigo-600 font-medium">Press Enter to query</span>
+          <span>Retrieves relevant memory points and synthesizes verified answers with citations.</span>
+          <span className="text-violet-600 font-medium">Press Enter to query</span>
         </div>
       </div>
 

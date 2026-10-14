@@ -55,7 +55,7 @@ const AGENTS_MANIFEST = [
   {
     name: 'Memory Assistant Agent',
     role: 'Contextual RAG Synthesizer',
-    description: 'Performs semantic reasoning over top vector chunks retrieved from Qdrant Cloud to deliver grounded answers.',
+    description: 'Performs semantic reasoning over top vector chunks retrieved from your AI Memory Vault to deliver grounded answers.',
     status: 'Active',
     envKey: 'MEMORY_AGENT_ID',
     badgeColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',

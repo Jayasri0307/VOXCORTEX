@@ -7,6 +7,7 @@ import { ChatAssistant } from './pages/ChatAssistant';
 import { VoiceMemories } from './pages/VoiceMemories';
 import { TasksPage } from './pages/TasksPage';
 import { AgentControlCenter } from './pages/AgentControlCenter';
+import { OmiSyncHub } from './pages/OmiSyncHub';
 import { SettingsPage } from './pages/SettingsPage';
 import { api } from './services/api';
 import { NavigationTab, MemoryItem, TaskItem, WorkflowExecution, StatsResponse } from './types';
@@ -163,6 +164,14 @@ export function App() {
             <AgentControlCenter
               executions={executions}
               isBackendLive={isBackendLive}
+            />
+          )}
+
+          {activeTab === 'omi' && (
+            <OmiSyncHub
+              memories={memories}
+              isBackendLive={isBackendLive}
+              onRefresh={refreshAllData}
             />
           )}
 

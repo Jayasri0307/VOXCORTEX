@@ -13,11 +13,12 @@ interface TopNavProps {
 
 const TAB_TITLES: Record<NavigationTab, { title: string; subtitle: string }> = {
   dashboard: { title: 'Overview Dashboard', subtitle: 'Voice memory intelligence, multi-agent operations, and live metrics' },
-  chat: { title: 'AI Memory Assistant', subtitle: 'Semantic Q&A grounded in past voice conversations and Qdrant Cloud' },
+  chat: { title: 'Cortex Memory Assistant', subtitle: 'Semantic Q&A grounded in past voice conversations and neural memory' },
   memories: { title: 'Voice Memory Vault', subtitle: 'Searchable archive of spoken transcripts, summaries, and verified facts' },
   tasks: { title: 'Tasks & Action Items', subtitle: 'Deliverables and deadlines extracted by the Task Extractor Agent' },
+  omi: { title: 'Mobile Voice Sync & Live Recorder', subtitle: 'Mobile phone audio capture, webhook sync, and real-time multi-agent processing' },
   agents: { title: 'Agent Activity & Telemetry', subtitle: 'Manager, Summarizer, Task Extractor & Memory Assistant execution trace' },
-  settings: { title: 'Settings & Data Governance', subtitle: 'Memory retention policy, Qdrant vector isolation, and account controls' },
+  settings: { title: 'Settings & Data Governance', subtitle: 'Memory retention policy, tenant boundary isolation, and system controls' },
 };
 
 export const TopNav: React.FC<TopNavProps> = ({
@@ -28,7 +29,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   isBackendLive,
   pendingTasksCount
 }) => {
-  const current = TAB_TITLES[activeTab] || { title: 'MindFlow AI', subtitle: 'Voice Memory Assistant' };
+  const current = TAB_TITLES[activeTab] || { title: 'VoxCortex AI', subtitle: 'Voice Memory & Cognitive Cortex' };
 
   return (
     <header className="h-16 border-b border-slate-200/80 bg-white/95 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">

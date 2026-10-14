@@ -9,10 +9,10 @@ BACKEND_DIR = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
     # App
-    PROJECT_NAME: str = "MindFlow AI"
-    VERSION: str = "1.1.0"
+    PROJECT_NAME: str = "VoxCortex AI"
+    VERSION: str = "2.0.0"
     ENVIRONMENT: str = "development"
-    PORT: int = 8000
+    PORT: int = 8001
     HOST: str = "127.0.0.1"
     FRONTEND_ORIGIN: str = "http://localhost:5173"
 
@@ -50,7 +50,8 @@ class Settings(BaseSettings):
     # Single-user local demo identity (see README "Authentication limitations").
     DEFAULT_USER_ID: str = "default_user"
 
-    DATA_DIR: Path = Path("/tmp/mindflow_data") if os.environ.get("VERCEL") else (BACKEND_DIR / "data")
+    BACKEND_DIR: Path = BACKEND_DIR
+    DATA_DIR: Path = Path("/tmp/voxcortex_data") if os.environ.get("VERCEL") else (BACKEND_DIR / "data")
 
     model_config = SettingsConfigDict(
         env_file=str(BACKEND_DIR / ".env"),
